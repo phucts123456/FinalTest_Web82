@@ -23,7 +23,6 @@ const getMovie = async (req, res) => {
     })
 }
 
-
 const searchMovie = async (req, res) => {
     const searchKey = req.query.keyword;
     let searchModel = searchKey !== '' &&  searchKey !== undefined
@@ -35,7 +34,6 @@ const searchMovie = async (req, res) => {
         data: totalItems
     })
 }
-
 
 const getDetail = async (req, res) => {
     const ID = req.params.ID;
@@ -52,13 +50,11 @@ const getDetail = async (req, res) => {
     }
 }
 
-
-
 const createMovie = async (req, res) => {
 
     const { ID, name, time, year, introduce, image} = req.body;
     if (!ID || !name || !time || !year || !introduce) {
-        return res.status(400).json({ error: 'Need to input ID,name,time,year,introduce.' });
+        return res.status(400).json({ error: 'Need to input ID,name,time,year,introduce,image.' });
     }
 
     const isMovieExist = await movieModel.findOne({ID: ID}).exec();
