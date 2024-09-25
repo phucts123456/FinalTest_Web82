@@ -3,7 +3,7 @@ const constants = require("../utils/constants");
 const config = require("dotenv").config({ path: ".env" });
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
-
+const session = require('express-session');
 const registerDefaultAccout = async () => {
     const defaultUserName = process.env.DEFAULT_USERNAME === undefined 
         ? constants.DEFAULT_USERNAME 
@@ -36,7 +36,8 @@ const loginUser = async (req, res) => {
         : false;
     if(userFromDB && isCorrectPassword) {
         const accessTokenSecret = process.env.ACCESSS_TOKEN_SECERT_KEY;
-        const accessToken = jwt.sign({id: userFromDB.id}, accessTokenSecret, { expiresIn: '1h' })
+        const accessToken = jwt.sign({id: userFromDB.id}, accessTokenSecret, { expiresIn: '1h' });
+        req.session.isLogin = true;
         res.status(200).send({
             message: "Login success",
             accessToken: accessToken,
@@ -48,7 +49,22 @@ const loginUser = async (req, res) => {
     } 
 }
 
+const logoutUser = (req, res) => { 
+    if(req.session.isLogin === true) {
+        req.session.destroy();
+        res.status(200).send({
+            message: "Logout success."
+        })
+    } else {
+        res.status(400).send({
+            message: "User is already logout."
+        })
+    }
+
+}
+
 module.exports = {
     registerDefaultAccout,
-    loginUser
+    loginUser,
+    logoutUser
 }

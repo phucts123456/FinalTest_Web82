@@ -2,12 +2,18 @@ const express = require('express');
 const cors = require('cors')
 const mongoose = require('mongoose');
 const userController = require("./controllers/user");
+const session = require('express-session');
 const app = express();
 const router = require('./routes');
 app.use(express.json());
 const cloudinary = require('cloudinary').v2;
 app.use(cors());
 const config = require("dotenv").config({ path: ".env" });
+app.use(session({
+  resave: true, 
+  saveUninitialized: true, 
+  secret: 'somesecret', 
+  cookie: { maxAge: 900000000 }}));
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,

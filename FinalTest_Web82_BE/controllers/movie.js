@@ -8,15 +8,11 @@ const getMovie = async (req, res) => {
     const limit = req.query.limit
     const pageSize = limit !== undefined ? limit : constants.CONST_MOVIE_PER_PAGE;
     const skip = (pageNumber - 1) * pageSize;
-    console.log(pageSize)
-    console.log(pageNumber)
-
+    let totalMovie = await movieModel.countDocuments();
     let totalItems = await movieModel.find().skip(skip).limit(pageSize).exec();
-
-    const totalmovie = totalItems.length; 
-    const totalPage = Math.ceil(totalmovie / pageSize);
+    const totalPage = Math.ceil(totalMovie / pageSize);
     const data = {
-        totalItems: totalmovie,
+        totalItems: totalMovie,
         totalPage: totalPage,
         currentPage: pageNumber,
         items: totalItems
@@ -60,7 +56,7 @@ const getDetail = async (req, res) => {
 
 const createMovie = async (req, res) => {
 
-    const { ID, name, time, year, introduce} = req.body;
+    const { ID, name, time, year, introduce, image} = req.body;
     if (!ID || !name || !time || !year || !introduce) {
         return res.status(400).json({ error: 'Need to input ID,name,time,year,introduce.' });
     }
@@ -73,7 +69,7 @@ const createMovie = async (req, res) => {
             time: time,
             year: year,
             introduce: introduce,
-            image: ""
+            image: image
         }
         await movieModel.create(newMovie);
         res.status(201).send({
@@ -120,7 +116,7 @@ const updateMovie = async (req, res) => {
                 })
             } else {
                 res.status(400).send({
-                    message: "Update movie fail.",
+                    message: "Update movie fail. This movies not exist",
                 })
             }
         }

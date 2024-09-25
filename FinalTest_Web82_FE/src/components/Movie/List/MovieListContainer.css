@@ -1,0 +1,19 @@
+.movie_list_container {
+    width: 50%;
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.movie_list_container_modal
+{
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 25%;
+    top: 8%;
+    width: 50%; /* Full width */
+    height: 88%; /* Full height */
+    background-color: #fff;
+    border-radius: 10px;
+}
