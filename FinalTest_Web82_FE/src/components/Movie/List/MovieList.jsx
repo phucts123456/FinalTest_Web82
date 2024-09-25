@@ -11,13 +11,15 @@ function MovieList({isOpen, setIsOpen, setMovie}) {
     const pageNumber = searchParams.get("pn") != null ? searchParams.get("pn")  : 1;
     useEffect(() => {
         getMovieList(pageNumber).then((response) => {
+            console.log("data");
             console.log(response.data.data.items);
             setMovieList(response.data.data.items);
             setTotalPage(response.data.data.totalPage);
             setCanNextPage(Number.parseInt(pageNumber) <= Number.parseInt(totalPage));
         }).catch((error) =>
         {
-            setError(error.response.data.message)
+            console.log("error");
+            setError(error.response.data.message);
         })
     }, [])
     const openModal = (item) => {
@@ -50,7 +52,7 @@ function MovieList({isOpen, setIsOpen, setMovie}) {
                     ? movieList.map((item) => {
                             return ( 
                                 <div className="movie_list_data_item" onClick={() => {setIsOpen(!isOpen); setMovie(item);}}>
-                                    <img className='movie_list_data_item_image' src={item.image}/>
+                                    <img className='movie_list_data_item_image' src={item.image === "" ? "./img/defaultFilm.jpg" :item.image}/>
                                     <p className='movie_list_data_item_name'>{item.name}</p>
                                     <p className='movie_list_data_item_info'>{item.time} min {item.year}</p>
                                 </div>

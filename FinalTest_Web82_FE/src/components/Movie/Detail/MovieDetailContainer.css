@@ -39,6 +39,9 @@
     font-weight: 400;
     margin-bottom: 0;
     margin-top: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .movie_detail_container .movie_detail_right  .movie_detail_right_info {
