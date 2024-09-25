@@ -6,7 +6,7 @@ const MovieDetailContainer = ({movie, isOpen, setIsOpen}) => {
                 <img src={movie.image === "" ? "./img/defaultFilm.jpg" :movie.image} className="movie_detail_left_image"/>
             </div>
             <div className="movie_detail_right">
-                <h3 className="movie_detail_right_title">{movie.name}dddddddddddddddddddddddddddddddddddddddddddddddddddd</h3>
+                <h3 className="movie_detail_right_title">{movie.name}</h3>
                 <p className="movie_detail_right_info">{movie.time} min {movie.year}</p>
                 <p className="movie_detail_right_des">{movie.introduce}</p>
                 <button className="movie_detail_right_btn"><img src="./img/play-16.png" style={{marginRight:'10px'}} className="movie_detail_close_button" />PLAY MOVIE</button>
