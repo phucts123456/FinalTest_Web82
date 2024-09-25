@@ -6,6 +6,7 @@ const jwtCheckMiddleware = (req, res, next) => {
         const token = authHeader.split(' ')[1];
         const secretKey = process.env.ACCESSS_TOKEN_SECERT_KEY;
         jwt.verify(token, secretKey, (err, decoded) => {
+          console.log(req.session.isLogin) 
           if (err || req.session.isLogin !== true) {
             if(req.session.isLogin !== true) return res.status(401).json({ message: 'Out of session. Please login again' });
             return res.status(401).json({ success: false, message: err.message});
